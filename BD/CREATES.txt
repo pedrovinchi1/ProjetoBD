@@ -1,0 +1,108 @@
+-- -----------------------------------------------------
+-- Criação do banco de dados 
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS dbbd2;
+
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbgerente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tbgerente (
+  ger_codigo INT NOT NULL UNIQUE,
+  ger_nome VARCHAR(50) NOT NULL,
+  ger_cpf BIGINT NOT NULL UNIQUE,
+  ger_tel BIGINT NULL DEFAULT NULL,
+  ger_senha VARCHAR(15) NOT NULL,
+  ger_email VARCHAR(50) NOT NULL,
+  PRIMARY KEY (ger_codigo));
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbproduto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tbproduto (
+  prod_codigo INT NOT NULL UNIQUE,
+  prod_nome VARCHAR(50) NOT NULL,
+  prod_descricao VARCHAR(300) NULL DEFAULT NULL,
+  prod_preco DECIMAL(10,2) NOT NULL,
+  prod_marca VARCHAR(20) NOT NULL,
+  prod_categoria VARCHAR(20) NOT NULL,
+  prod_modelo VARCHAR(20) NOT NULL,
+  ger_codigo INT NOT NULL,
+  prod_caddate TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  prod_fornecedor VARCHAR(50) NOT NULL,
+  PRIMARY KEY (prod_codigo),
+  CONSTRAINT tbproduto_ibfk_1
+    FOREIGN KEY (ger_codigo)
+    REFERENCES tbgerente (ger_codigo));
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbestoque`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tbestoque(
+  est_quantidadeprod INT NOT NULL,
+  ger_codigo INT NOT NULL,
+  est_codigo SERIAL,
+  prod_codigo INT NOT NULL,
+  est_alteracaodate TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (est_codigo),
+  CONSTRAINT tbestoque_ibfk_2
+    FOREIGN KEY (ger_codigo)
+    REFERENCES tbgerente (ger_codigo));
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbassistente`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tbassistente (
+  ass_codigo INT NOT NULL UNIQUE,
+  ass_nome VARCHAR(50) NOT NULL,
+  ass_cpf BIGINT NOT NULL UNIQUE,
+  ass_tel BIGINT NULL DEFAULT NULL,
+  ass_senha VARCHAR(15) NOT NULL,
+  ass_email VARCHAR(50) NOT NULL,
+  ger_codigo INT NOT NULL,
+  PRIMARY KEY (ass_codigo),
+  CONSTRAINT tbassistente_ibfk_4
+    FOREIGN KEY (ger_codigo)
+    REFERENCES tbgerente (ger_codigo));
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbrelatorioestoque`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tbrelatorioestoque (
+  idRelEst SERIAL,
+  prod_caddate TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  prod_codigo INT NOT NULL,
+  prod_nome VARCHAR(50) NOT NULL,
+  est_quantidadeprod INT NOT NULL,
+  est_codigo INT NOT NULL,
+  ger_codigo INT NOT NULL,
+  ger_nome VARCHAR(50) NOT NULL,
+  PRIMARY KEY (idRelEst),
+  CONSTRAINT fk_relatorioEst_3
+    FOREIGN KEY (ger_codigo)
+    REFERENCES tbgerente (ger_codigo));
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbrelatorioprod`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS tbrelatorioprod (
+  idRel SERIAL,
+  prod_codigo INT NOT NULL,
+  prod_nome VARCHAR(50) NOT NULL,
+  prod_descricao VARCHAR(300) NOT NULL,
+  prod_preco DECIMAL(10,2) NOT NULL,
+  prod_marca VARCHAR(20) NOT NULL,
+  prod_categoria VARCHAR(20) NOT NULL,
+  prod_modelo VARCHAR(20) NOT NULL,
+  ger_codigo INT NOT NULL,
+  ger_nome VARCHAR(50) NOT NULL,
+  prod_caddate TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  prod_fornecedor VARCHAR(50) NOT NULL,
+  PRIMARY KEY (idRel),
+  CONSTRAINT fk_relatorio_1
+    FOREIGN KEY (ger_codigo)
+    REFERENCES tbgerente (ger_codigo));
+
+
+
+	

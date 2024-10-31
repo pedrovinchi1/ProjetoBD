@@ -1,0 +1,87 @@
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbgerente`
+-- -----------------------------------------------------
+INSERT INTO tbgerente(ger_codigo, ger_nome, ger_cpf, ger_tel, ger_senha, ger_email)
+	VALUES (1, 'João', 12569917885, 43988563278, 'Joao123', 'joao@gerente.com');
+INSERT INTO tbgerente(ger_codigo, ger_nome, ger_cpf, ger_tel, ger_senha, ger_email)
+	VALUES (2, 'Ana', 48952317886, 41999935896, 'Ana123', 'ana@gerente.com');
+INSERT INTO tbgerente(ger_codigo, ger_nome, ger_cpf, ger_tel, ger_senha, ger_email)
+	VALUES (3, 'Marcos', 10785449802, 43999856374, 'marcos', 'marcos@gerente.com');
+INSERT INTO tbgerente(ger_codigo, ger_nome, ger_cpf, ger_tel, ger_senha, ger_email)
+	VALUES (4, 'Maria', 19537724815, 43998744489, '123maria', 'maria@gerente.com');
+INSERT INTO tbgerente(ger_codigo, ger_nome, ger_cpf, ger_tel, ger_senha, ger_email)
+	VALUES (5, 'José', 55727391117, 43999123665, 'jose000', 'jose@gerente.com');
+
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbproduto`
+-- -----------------------------------------------------
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (1, 'PROCESSADOR INTEL CORE I9', '13900F, 24-CORE, 32-THREADS, 2.0GHZ (5.6GHZ TURBO), CACHE 36MB, LGA1700, BX8071513900F', 3699.99, 'INTEL', 'Processador', 'CORE I9', 1, 'INTEL');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (2, 'PROCESSADOR AMD RYZEN 7', '5700G, 8-CORE, 16-THREADS, 3.8GHZ (4.6GHZ TURBO), CACHE 20MB, AM4, 100-100000263BOX-BR', 1399.00, 'AMD', 'Processador', 'RYZEN 7', 1, 'AMD');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (3, 'PROCESSADOR AMD RYZEN 9', 'PROCESSADOR AMD RYZEN 9 7950X3D, 16-CORE, 32-THREADS, 4.2GHZ (5.7GHZTURBO), CACHE 144MB, AM5, 100-100000908WOF', 5199.01, 'AMD', 'Processador', 'RYZEN 9', 1, 'AMD');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (4, 'PLACA MAE ASROCK B550M PG RIPTIDE', 'PLACA MAE ASROCK B550M PG RIPTIDE, DDR4, SOCKET AM4, M-ATX, CHIPSET AMD B550, B550M PG RIPTIDE', 1299.90, 'ASROCK', 'Placa mãe', 'B550 PG RIPTIDE', 2, 'ASROCK');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (5, 'PLACA MAE ASROCK X670E TAICHI', 'PLACA MAE ASROCK X670E TAICHI, DDR5, SOCKET AM5, E-ATX, CHIPSET AMD X670, X670E-TAICHI', 4259.89, 'ASROCK', 'Placa mãe', 'X670E TAICHI', 2, 'ASROCK');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (6, 'MEMORIA CORSAIR VALUE SELECT 4GB', 'MEMORIA CORSAIR VALUE SELECT 4GB (1X4) DDR3 1600MHZ C11, CMV4GX3M1A1600C11', 139.99, 'CORSAIR', 'Memória Corsair', 'VALUE SELECT 4GB', 3, 'CORSAIR');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (7, 'MEMORIA CORSAIR VENGEANCE LPX 8GB', 'MEMORIA CORSAIR VENGEANCE LPX 8GB (2X4) DDR4 2400MHZ C16 PRETA, CMK8GX4M2A2400C16', 358.13, 'CORSAIR', 'Memória Corsair', 'VENGEANCE LPX 8GB', 3, 'CORSAIR');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (8, 'MEMORIA ADATA XPG SPECTRIX 32GB', 'MEMORIA ADATA XPG SPECTRIX D35G, RGB, 32GB (1X32GB), DDR4, 3600MHZ, C18, BRANCO, AX4U360032G18I-SWHD35G', 639.99, 'ADATA', 'Memória Adata', 'XPG SPECTRIX 32GB', 3, 'ADATA');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (9, 'TECLADO LOGITECH K480', 'TECLADO LOGITECH K480 MULTI-DEVICE BLUETOOTH PRETO, 920-006348', 229.90, 'LOGITECH', 'Periféricos', 'MULTI-DEVICE', 4, 'LOGITECH');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (10, 'TECLADO GAMER XPG MAGE', 'TECLADO GAMER XPG MAGE, RGB, SWITCH VERMELHO, MAGE104RD-BKCWW', 425.95, 'XPG', 'Periféricos', 'MAGE104RD', 4, 'XPG');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (11, 'MONITOR GAMER BENQ MOBIUZ EX2710S', 'MONITOR GAMER BENQ MOBIUZ EX2710S, 27 POL, IPS, FHD, 1MS, 165HZ, FREESYNC PREMIUM, HDMI/DP, EX2710S', 2999.90, 'BENQ', 'Monitores', 'MOBIUZ EX2710S', 5, 'BENQ');
+INSERT INTO tbproduto(prod_codigo, prod_nome, prod_descricao, prod_preco, prod_marca, prod_categoria, prod_modelo, ger_codigo, prod_fornecedor)
+	VALUES (12, 'MONITOR PHILIPS 18.5 POL', 'MONITOR PHILIPS 18.5 POL. LED SMARTCONTROL LITE 5MS HDMI, 193V5LHSB2', 900.91, 'PHILIPS', 'Monitores', 'LED SMARTCONTROL', 5, 'PHILIPS');
+
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbestoque`
+-- -----------------------------------------------------
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (9, 1, 1);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (10, 1, 2);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (8, 1, 3);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (9, 2, 4);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (5, 2, 5);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (15, 3, 6);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (10, 3, 7);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (8, 3, 8);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (11, 4, 9);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (6, 4, 10);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (10, 5, 11);
+INSERT INTO tbestoque (est_quantidadeprod, ger_codigo, prod_codigo)
+	VALUES (11, 5, 12);
+
+
+-- -----------------------------------------------------
+-- Table `dbbd2`.`tbassistente`
+-- -----------------------------------------------------
+
+INSERT INTO tbassistente(ass_codigo, ass_nome, ass_cpf, ass_tel, ass_senha, ass_email, ger_codigo)
+	VALUES (1, 'Ana Maria', 12345678901, 43123456789, '1234', 'ana@gmail.com', 1);
+INSERT INTO tbassistente(ass_codigo, ass_nome, ass_cpf, ass_tel, ass_senha, ass_email, ger_codigo)
+	VALUES (2, 'Bianca', 98765432198, 43987654321, '4321', 'bianca@gmail.com', 2);
+INSERT INTO tbassistente(ass_codigo, ass_nome, ass_cpf, ass_tel, ass_senha, ass_email, ger_codigo)
+	VALUES (3, 'Carol', 23242526271, 43313234353, '12345', 'carol@gmail.com', 3);
+INSERT INTO tbassistente(ass_codigo, ass_nome, ass_cpf, ass_tel, ass_senha, ass_email, ger_codigo)
+	VALUES (4, 'Diana', 41414141414, 43121212128, '54321', 'diana@gmail.com', 4);
+INSERT INTO tbassistente(ass_codigo, ass_nome, ass_cpf, ass_tel, ass_senha, ass_email, ger_codigo)
+	VALUES (5, 'Eduarda', 52525252525, 43363636366, '123456', 'eduarda@gmail.com', 5);

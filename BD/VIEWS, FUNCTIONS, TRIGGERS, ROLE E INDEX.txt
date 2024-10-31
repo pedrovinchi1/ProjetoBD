@@ -1,0 +1,112 @@
+-- -----------------------------------------------------
+-- View com atributos das tabelas tbproduto e tbgerente
+-- -----------------------------------------------------
+CREATE VIEW viewrelatorioprod AS
+  (SELECT tbproduto.prod_codigo, tbproduto.prod_nome,
+  tbproduto.prod_descricao, tbproduto.prod_preco,
+  tbproduto.prod_marca, tbproduto.prod_categoria,
+  tbproduto.prod_modelo, tbgerente.ger_codigo,
+  tbgerente.ger_nome, tbproduto.prod_caddate,
+  tbproduto.prod_fornecedor
+  FROM tbproduto
+  NATURAL JOIN tbgerente);
+
+
+-- -----------------------------------------------------
+-- Função e Trigger para 'insert' na tabela tbproduto através da view
+-- -----------------------------------------------------
+CREATE OR REPLACE FUNCTION insteadof_INSERTviewprod() RETURNS TRIGGER AS $$
+BEGIN
+  insert into tbproduto (prod_codigo,prod_nome,prod_descricao,prod_preco,prod_marca,
+	prod_categoria,prod_modelo,prod_fornecedor,ger_codigo) values (new.prod_codigo,
+	new.prod_nome,new.prod_descricao,new.prod_preco,new.prod_marca,new.prod_categoria,new.prod_modelo,
+	new.prod_fornecedor,new.ger_codigo);
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER insteadof_INSERTviewprod INSTEAD OF INSERT
+ON viewrelatorioprod FOR EACH ROW EXECUTE PROCEDURE insteadof_INSERTviewprod();
+
+
+-- -----------------------------------------------------
+-- Função e Trigger para 'update' na tabela tbproduto através da view
+-- -----------------------------------------------------
+CREATE OR REPLACE FUNCTION insteadof_UPDATEviewprod() RETURNS TRIGGER AS $$
+BEGIN
+      update tbproduto set prod_codigo = new.prod_codigo, prod_nome = new.prod_nome,
+    prod_descricao = new.prod_descricao, prod_preco = new.prod_preco, prod_marca =
+    new.prod_marca, prod_categoria = new.prod_categoria, prod_modelo = new.prod_modelo,
+	prod_fornecedor = new.prod_fornecedor, ger_codigo = new.ger_codigo
+    where tbproduto.prod_codigo = new.prod_codigo;
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER insteadof_UPDATEviewprod INSTEAD OF UPDATE
+ON viewrelatorioprod FOR EACH ROW EXECUTE PROCEDURE insteadof_UPDATEviewprod();
+
+
+-- -----------------------------------------------------
+-- Função e Trigger para 'backup' da tabela tbproduto
+-- -----------------------------------------------------
+CREATE FUNCTION before_DELETEtbprod() RETURNS TRIGGER AS $$
+BEGIN
+	insert into tbrelatorioprod (prod_codigo,prod_nome,prod_descricao,prod_preco,prod_marca,
+    prod_categoria,prod_modelo,prod_fornecedor,ger_codigo,ger_nome) values (OLD.prod_codigo,
+    OLD.prod_nome,OLD.prod_descricao,OLD.prod_preco,OLD.prod_marca,OLD.prod_categoria,OLD.prod_modelo,
+    OLD.prod_fornecedor,OLD.ger_codigo,(select tbgerente.ger_nome from tbgerente
+    where tbgerente.ger_codigo = OLD.ger_codigo));
+	delete from tbestoque where tbestoque.prod_codigo = OLD.prod_codigo;
+    return old;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER before_DELETEtbprod BEFORE DELETE
+ON tbproduto FOR EACH ROW EXECUTE PROCEDURE before_DELETEtbprod();
+
+
+-- -----------------------------------------------------
+-- Função e Trigger para 'update' da tabela tbrelatorioestoque 
+-- após 'update' na tabela tbestoque
+-- -----------------------------------------------------
+CREATE FUNCTION after_UPDATEtbest() RETURNS TRIGGER AS $$
+BEGIN
+	insert into tbrelatorioestoque (prod_codigo,prod_nome,est_quantidadeprod,est_codigo,
+    ger_codigo,ger_nome) values (new.prod_codigo,(select tbproduto.prod_nome 
+    from tbproduto where tbproduto.prod_codigo = new.prod_codigo)
+    ,new.est_quantidadeprod,new.est_codigo,new.ger_codigo,(select tbgerente.ger_nome from tbgerente 
+    where tbgerente.ger_codigo = new.ger_codigo));
+    return new;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER after_UPDATEtbest AFTER UPDATE
+ON tbestoque FOR EACH ROW EXECUTE PROCEDURE after_UPDATEtbest();
+
+
+-- -----------------------------------------------------
+-- Usuário e atribuição de provilégio para leitura
+-- das tabelas + visualização e inserção usando a view
+-- -----------------------------------------------------
+create ROLE assistente with login password 'assistente';
+grant select on viewrelatorioprod to assistente;
+grant insert on viewrelatorioprod to assistente;
+grant select on tbestoque to assistente;
+grant select on tbproduto to assistente;
+grant select on tbassistente to assistente;
+grant select on tbgerente to assistente;
+
+
+-- -----------------------------------------------------
+-- 4 índices em tabelas diferentes
+-- -----------------------------------------------------
+create index cpf on tbassistente(ass_cpf);
+create index quantidade on tbestoque(est_quantidadeprod);
+create index nome on tbgerente(ger_nome);
+create index preco on tbproduto(prod_preco);
+
+
+
+
+

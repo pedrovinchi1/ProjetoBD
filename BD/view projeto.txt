@@ -1,0 +1,22 @@
+CREATE VIEW viewrelatorioprod AS
+	(SELECT tbproduto.prod_codigo, tbproduto.prod_nome,
+	tbproduto.prod_descricao, tbproduto.prod_preco, 
+	tbproduto.prod_marca, tbproduto.prod_categoria,
+	tbproduto.prod_modelo, tbgerente.ger_codigo,
+	tbgerente.ger_nome, tbproduto.prod_caddate,
+	tbproduto.prod_fornecedor
+	FROM tbproduto
+	NATURAL JOIN tbgerente);
+
+CREATE OR REPLACE FUNCTION after_INSERTviewprod() RETURNS TRIGGER AS $$
+BEGIN
+	insert into tbproduto (prod_codigo,prod_nome,prod_descricao,prod_preco,prod_marca,
+    prod_categoria,prod_modelo,prod_fornecedor,ger_codigo) values (new.prod_codigo,
+    new.prod_nome,new.prod_descricao,new.prod_preco,new.prod_marca,new.prod_categoria,new.prod_modelo,
+    new.prod_fornecedor,new.ger_codigo);
+	RETURN NULL;
+END;
+$$ language 'plpgsql';
+
+CREATE TRIGGER after_INSERTviewprod INSTEAD OF INSERT
+ON viewrelatorioprod FOR EACH ROW EXECUTE PROCEDURE after_INSERTviewprod();
